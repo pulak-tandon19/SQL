@@ -1,7 +1,7 @@
 %option noyywrap
 
 %{
-#include "lex_parser/ParserExport.h"
+#include "SQLParser/ParserExport.h"
 
 stack_t undo_stack = {-1, {0, 0, 0}};
 
@@ -133,7 +133,7 @@ RESTORE_CHKP(int a) {
     yy_scan_string(curr_ptr);
 }
 
-#include "SqlEnums.h"
+#include "SQLParser/SqlEnums.h"
 
 %}
 
