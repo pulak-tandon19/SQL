@@ -15,3 +15,5 @@ g++ -g -c SQLParser/SQLParserMain.c -o SQLParserMain.o
 echo "--- Compiling SQLCreateParserCFG.c ---"
 g++ -g -c SQLParser/SQLCreateParserCFG.c -o SQLCreateParserCFG.o
 
+echo "--- Creating DBMS Executable ---"
+g++ -g SQLParserMain.o SQLCreateParserCFG.o lex.yy.o -o dbms.exe -lfl
