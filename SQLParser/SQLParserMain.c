@@ -12,7 +12,7 @@ int main(int argc, char **argv) {
     parse_init();
 
     while (true) {
-        printf("postgres-#");
+        printf("postgres-# ");
 
         fgets((char*)lex_buffer, sizeof(lex_buffer), stdin);
 
