@@ -164,7 +164,7 @@ RESTORE_CHKP(int a) {
     return SQL_INT;
 }
 
-"decimal" {
+(decimal|double) {
     return SQL_DOUBLE;
 }
 
