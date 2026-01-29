@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 #include "sql_const.h"
-#include "SqlParser/SqlEnums.h"
+#include "../SqlParser/SqlEnums.h"
 
 typedef struct  key_mdata_ key_mdata_t;
 

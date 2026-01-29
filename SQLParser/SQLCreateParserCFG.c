@@ -5,7 +5,7 @@
 
 #include "ParserExport.h"
 #include "SqlEnums.h"
-#include "core/sql_create.h"
+#include "../core/sql_create.h"
     
 /* CFG
     create_query_parser -> create table <identifier> ( COLSLIST )

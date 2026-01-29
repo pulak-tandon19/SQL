@@ -4,7 +4,7 @@
 #include <memory.h>
 #include <assert.h>
 #include <time.h>
-#include "BPlusTreeLib/BPlusTree.h"
+#include "BPlusTree.h"
 
 int QueryAnsNum;
 
