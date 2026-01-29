@@ -15,5 +15,11 @@ g++ -g -c SQLParser/SQLParserMain.c -o SQLParserMain.o
 echo "--- Compiling SQLCreateParserCFG.c ---"
 g++ -g -c SQLParser/SQLCreateParserCFG.c -o SQLCreateParserCFG.o
 
+echo "--- Compiling BPlusTreeLib ---"
+g++ -g -c  -fpermissive BPlusTreeLib/BPlusTree.c -o BPlusTreeLib/BPlusTree.o
+
+echo "--- Compiling BPlusTreeCompFn.c ---"
+g++ -g -c  -fpermissive core/BPlusTreeCompFn.c -o core/BPlusTreeCompFn.o
+
 echo "--- Creating DBMS Executable ---"
-g++ -g SQLParserMain.o SQLCreateParserCFG.o lex.yy.o -o dbms.exe -lfl
+g++ -g SQLParserMain.o SQLCreateParserCFG.o lex.yy.o core/BPlusTreeCompFn.o -o dbms.exe -lfl
