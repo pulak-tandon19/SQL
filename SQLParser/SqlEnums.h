@@ -77,6 +77,8 @@ typedef enum sql_dtype_{
     SQL_INT,
     SQL_DOUBLE,
     SQL_BOOL,
+    SQL_IPV4_ADDR,
+    SQL_INTERVAL,
     SQL_DTYPE_MAX
 
 } sql_dtype_t;
