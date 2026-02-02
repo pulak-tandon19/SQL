@@ -65,22 +65,44 @@ Catalog_insert_new_table (BPlusTree_t *catalog, sql_create_data_t *cdata) {
     BPluskey_t bpkey;
 
     // Implementation : Creation and initialization of Catalog table
-    static key_mdata_t key_mdata1[] = {  {SQL_STRING, SQL_TABLE_NAME_MAX_SIZE}};
+    static key_mdata_t key_mdata2[] = {   {SQL_STRING, SQL_COLUMN_NAME_MAX_SIZE}  }  ;
+
     BPlusTree_t *schema_table = (BPlusTree_t *)calloc (1, sizeof (BPlusTree_t));
 
+    BPlusTree_init (schema_table, 
+                            rdbms_key_comp_fn, 
+                            NULL, 
+                            NULL,
+                            SQL_BTREE_MAX_CHILDREN_SCHEMA_TABLE,
+                            schema_table_record_free, 
+                            key_mdata2, sizeof(key_mdata2) / sizeof (key_mdata2[0]));
 
-    BPlusTree_init (catalog, 
-                    rdbms_key_comp_fn,
-                    NULL, 
-                    NULL,
-                    SQL_BTREE_MAX_CHILDREN_CATALOG_TABLE, 
-                    catalog_table_free_fn,
-                    key_mdata1, 
-                    sizeof(key_mdata1) / sizeof (key_mdata1[0]));
 
     /* Schema table has been created, now insert records in it. Each record is of the type : 
        key::  <column name>   value :: <catalog_rec_t >  */
     Catalog_create_schema_table_records (schema_table, cdata);
+
+    BPlusTree_t *record_table = (BPlusTree_t *)calloc (1, sizeof (BPlusTree_t));
+
+    /* Construct key meta data for this Table Schema*/
+    int key_mdata_size3;
+    key_mdata_t *key_mdata3 = sql_construct_table_key_mdata (cdata, &key_mdata_size3);
+
+    if (!key_mdata3) {
+        BPlusTree_Destroy (record_table);
+        BPlusTree_Destroy (schema_table);
+        printf ("Error : Table Must have atleast one primary key\n");
+        free(record_table);
+        free(schema_table);
+        free(bpkey.key);
+        return false;
+    }
+
+    BPlusTree_init (record_table, 
+                               rdbms_key_comp_fn,
+                               NULL, NULL, 
+                               SQL_BTREE_MAX_CHILDREN_RDBMS_TABLE, free,
+                               key_mdata3, key_mdata_size3);
 }
 
 
