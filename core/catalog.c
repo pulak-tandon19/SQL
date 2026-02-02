@@ -21,8 +21,19 @@ schema_table_record_free ( void *ptr) {
     free(ptr);
 }
 
+/* A fn used to free the 'value' of catalog table*/
 static void 
-catalog_table_free_fn (void *ptr) {}
+catalog_table_free_fn (void *ptr) {
+
+    ctable_val_t *ctable_val = (ctable_val_t *)ptr;
+
+    BPlusTree_Destroy (ctable_val->schema_table);
+    free (ctable_val->schema_table);
+    BPlusTree_Destroy (ctable_val->record_table);
+    free  (ctable_val->record_table);
+    free(ptr);
+}
+
 
 static void
 Catalog_create_schema_table_records (BPlusTree_t *schema_table, sql_create_data_t *cdata) {
