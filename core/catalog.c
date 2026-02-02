@@ -25,7 +25,38 @@ static void
 catalog_table_free_fn (void *ptr) {}
 
 static void
-Catalog_create_schema_table_records (BPlusTree_t *schema_table, sql_create_data_t *cdata) {}
+Catalog_create_schema_table_records (BPlusTree_t *schema_table, sql_create_data_t *cdata) {
+
+    int i;
+    int offset = 0;
+    BPluskey_t bpkey_tmplate;
+    schema_rec_t *schema_rec;
+
+    for (i = 0; i < cdata->n_cols; i++) {
+
+        /* Setup the key*/
+        bpkey_tmplate.key = (void *)calloc (1, SQL_COLUMN_NAME_MAX_SIZE);
+        strncpy ((char *) bpkey_tmplate.key, 
+                        cdata->column_data[i].col_name,
+                        SQL_COLUMN_NAME_MAX_SIZE);
+        bpkey_tmplate.key_size = SQL_COLUMN_NAME_MAX_SIZE;
+
+        /* Set up the value (a.k.a record)*/
+        schema_rec = (schema_rec_t *)calloc (1, sizeof (schema_rec_t));
+        strncpy (schema_rec->column_name,
+                        cdata->column_data[i].col_name, 
+                        SQL_COLUMN_NAME_MAX_SIZE);
+        schema_rec->dtype = cdata->column_data[i].dtype;
+        schema_rec->dtype_size = cdata->column_data[i].dtype_len;
+        schema_rec->offset = offset;
+        offset += cdata->column_data[i].dtype_len;
+        schema_rec->is_primary_key = cdata->column_data[i].is_primary_key;
+
+        /* Insert into Schema Table*/
+        assert (BPlusTree_Insert (schema_table, &bpkey_tmplate, (void *)schema_rec));
+    }
+}
+
 
 bool 
 Catalog_insert_new_table (BPlusTree_t *catalog, sql_create_data_t *cdata) {
