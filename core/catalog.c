@@ -69,6 +69,8 @@ Catalog_create_schema_table_records (BPlusTree_t *schema_table, sql_create_data_
 }
 
 
+static bool initialized = false;
+
 bool 
 Catalog_insert_new_table (BPlusTree_t *catalog, sql_create_data_t *cdata) {
 
@@ -76,6 +78,53 @@ Catalog_insert_new_table (BPlusTree_t *catalog, sql_create_data_t *cdata) {
     BPluskey_t bpkey;
 
     // Implementation : Creation and initialization of Catalog table
+    static key_mdata_t key_mdata1[] = {  {SQL_STRING, SQL_TABLE_NAME_MAX_SIZE}};
+
+    if (!initialized) {
+
+        BPlusTree_init (catalog, 
+                                rdbms_key_comp_fn,
+                                NULL, 
+                                NULL,
+                                SQL_BTREE_MAX_CHILDREN_CATALOG_TABLE, 
+                                catalog_table_free_fn,
+                                key_mdata1, 
+                                sizeof(key_mdata1) / sizeof (key_mdata1[0]));
+
+        initialized = true;
+    }
+    
+    // prepare the key to be inserted
+    bpkey.key = (void *)calloc (1, SQL_TABLE_NAME_MAX_SIZE);
+    bpkey.key_size =  SQL_TABLE_NAME_MAX_SIZE;
+    strncpy((char *)bpkey.key, cdata->table_name, SQL_TABLE_NAME_MAX_SIZE);
+
+    // Now let us check for SQL table existence
+    if (BPlusTree_Query_Key (catalog, &bpkey)) {
+        printf ("Error : Table Already Exist\n");
+        free(bpkey.key);
+        return false;
+    }
+
+    // Now let us create the value/record for catalog table
+    ctable_val_t *ctable_val = (ctable_val_t *)calloc (1, sizeof (ctable_val_t));
+    strncpy (ctable_val->table_name, cdata->table_name, SQL_TABLE_NAME_MAX_SIZE);
+    ctable_val->schema_table = NULL;
+    ctable_val->record_table = NULL;
+
+    // Fill the column array also in ctable_val 
+    for (i = 0; i < cdata->n_cols; i++) {
+        
+        strncpy (ctable_val->column_lst[i],
+            cdata->column_data[i].col_name,
+            SQL_COLUMN_NAME_MAX_SIZE );
+     }
+
+    /* Represent the end of array, be careful !*/
+     ctable_val->column_lst[cdata->n_cols][0] = '\0';     
+
+    // Implementation  : creating of schema table of SQL table ( emp )
+
     static key_mdata_t key_mdata2[] = {   {SQL_STRING, SQL_COLUMN_NAME_MAX_SIZE}  }  ;
 
     BPlusTree_t *schema_table = (BPlusTree_t *)calloc (1, sizeof (BPlusTree_t));
@@ -91,8 +140,12 @@ Catalog_insert_new_table (BPlusTree_t *catalog, sql_create_data_t *cdata) {
 
     /* Schema table has been created, now insert records in it. Each record is of the type : 
        key::  <column name>   value :: <catalog_rec_t >  */
-    Catalog_create_schema_table_records (schema_table, cdata);
+     Catalog_create_schema_table_records (schema_table, cdata);
 
+
+    // Implementation  : Creation of Record Table of SQL table ( emp )
+
+        /* Now make the actual rdbms table ( record table ) to hold records */
     BPlusTree_t *record_table = (BPlusTree_t *)calloc (1, sizeof (BPlusTree_t));
 
     /* Construct key meta data for this Table Schema*/
@@ -105,6 +158,7 @@ Catalog_insert_new_table (BPlusTree_t *catalog, sql_create_data_t *cdata) {
         printf ("Error : Table Must have atleast one primary key\n");
         free(record_table);
         free(schema_table);
+        free(ctable_val);
         free(bpkey.key);
         return false;
     }
@@ -114,6 +168,14 @@ Catalog_insert_new_table (BPlusTree_t *catalog, sql_create_data_t *cdata) {
                                NULL, NULL, 
                                SQL_BTREE_MAX_CHILDREN_RDBMS_TABLE, free,
                                key_mdata3, key_mdata_size3);
+
+    ctable_val->schema_table = schema_table;
+    ctable_val->record_table = record_table;
+
+    BPlusTree_Insert (catalog, &bpkey, (void *)ctable_val);
+    printf ("CREATE TABLE\n");
+    return true;
 }
+
 
 
