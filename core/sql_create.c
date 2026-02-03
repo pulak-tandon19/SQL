@@ -6,7 +6,9 @@
 #include "sql_const.h"
 #include "../SqlParser/SqlEnums.h"
 #include "../BPlusTreeLib/BPlusTree.h"
+#include "catalog.h"
 
+extern BPlusTree_t TableCatalogDef;
 
 typedef struct sql_create_data_ {
 
@@ -25,8 +27,12 @@ typedef struct sql_create_data_ {
 
 }  sql_create_data_t; 
 
-void 
-sql_process_create_query (sql_create_data_t *cdata) ;
+ void 
+ sql_process_create_query (sql_create_data_t *cdata) {
+
+    Catalog_insert_new_table (&TableCatalogDef, cdata);
+ }
+
 
  void 
 sql_create_data_destroy (sql_create_data_t *cdata) ;

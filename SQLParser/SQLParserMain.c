@@ -5,8 +5,11 @@
 
 #include "SqlEnums.h"
 #include "ParserExport.h"
+#include "../core/sql_create.h"
 
 extern parse_rc_t create_query_parser();
+
+extern sql_create_data_t cdata;
 
 int main(int argc, char **argv) {
     parse_init();
@@ -36,8 +39,9 @@ int main(int argc, char **argv) {
                 yyrewind(1);
                 err = create_query_parser();
                 if (err == PARSE_SUCCESS) {
-                    //
-                } 
+                    sql_process_create_query (&cdata);
+                }
+                // sql_create_data_destroy(&cdata);
                 break;
 
             default:
