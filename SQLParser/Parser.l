@@ -152,9 +152,14 @@ RESTORE_CHKP(int a) {
     return SQL_INSERT_Q;
 }
 
-"drop" {
+"delete" {
     return SQL_DELETE_Q;
 }
+
+"drop" {
+    return SQL_DROP_TABLE_Q;
+}
+
 
 "varchar" {
     return SQL_STRING;
