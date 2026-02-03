@@ -37,4 +37,10 @@ Catalog_insert_new_table (BPlusTree_t *catalog, sql_create_data_t *cdata) ;
 void 
 Catalog_table_print (BPlusTree_t *catalog);
 
+void
+Catalog_table_print (BPlusTree_t *catalog);
+
+static void
+Schema_table_print (BPlusTree_t *schema_table);
+
 #endif 
