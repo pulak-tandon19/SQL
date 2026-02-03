@@ -3,6 +3,8 @@
 
 #include <stdlib.h>
 #include <stdbool.h>
+#include <stdio.h>
+#include <memory.h>
 #include "sql_const.h"
 #include "../SqlParser/SqlEnums.h"
 #include "../BPlusTreeLib/BPlusTree.h"
@@ -34,8 +36,11 @@ typedef struct sql_create_data_ {
  }
 
 
- void 
-sql_create_data_destroy (sql_create_data_t *cdata) ;
+void 
+sql_create_data_destroy (sql_create_data_t *cdata) {
+
+    memset (cdata, 0, sizeof (*cdata));
+}
 
 key_mdata_t *
 sql_construct_table_key_mdata (sql_create_data_t *cdata, int *key_mdata_size) {
