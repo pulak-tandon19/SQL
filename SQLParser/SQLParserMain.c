@@ -9,6 +9,7 @@
 #include "../core/sql_delete.h"
 
 extern parse_rc_t create_query_parser();
+extern parse_rc_t insert_into_query_parser();
 
 extern sql_create_data_t cdata;
 
@@ -34,7 +35,11 @@ int main(int argc, char **argv) {
                 break;
 
             case SQL_INSERT_Q:
-                break;
+                yyrewind(1);
+                err = insert_into_query_parser () ;
+                if (err == PARSE_SUCCESS) {
+                }
+            break;
 
             case SQL_CREATE_Q:
                 yyrewind(1);
