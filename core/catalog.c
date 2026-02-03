@@ -12,9 +12,6 @@ BPlusTree_t TableCatalogDef;
 extern int 
 rdbms_key_comp_fn ( BPluskey_t *key1, BPluskey_t *key2, key_mdata_t *key_mdata, int key_mdata_size) ;
 
-static void
-Catalog_create_schema_table_records (BPlusTree_t *schema_table, sql_create_data_t *cdata) {}
-
 /* A fn used to free the 'value' of catalog table*/
 static void 
 schema_table_record_free ( void *ptr) {
