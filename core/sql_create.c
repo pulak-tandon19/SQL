@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "sql_const.h"
-#include "SqlParser/SqlEnums.h"
+#include "../SqlParser/SqlEnums.h"
 #include "../BPlusTreeLib/BPlusTree.h"
 
 
