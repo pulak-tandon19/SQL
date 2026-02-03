@@ -21,5 +21,11 @@ g++ -g -c  -fpermissive BPlusTreeLib/BPlusTree.c -o BPlusTreeLib/BPlusTree.o
 echo "--- Compiling BPlusTreeCompFn.c ---"
 g++ -g -c  -fpermissive core/BPlusTreeCompFn.c -o core/BPlusTreeCompFn.o
 
+echo "--- Compiling catalog.c ---"
+g++ -g -c core/catalog.c -o core/catalog.o
+
+echo "--- Compiling sql_create.c ---"
+g++ -g -c core/sql_create.c -o core/sql_create.o
+
 echo "--- Creating DBMS Executable ---"
-g++ -g SQLParserMain.o SQLCreateParserCFG.o lex.yy.o core/BPlusTreeCompFn.o -o dbms.exe -lfl
+g++ -g SQLParserMain.o SQLCreateParserCFG.o lex.yy.o BPlusTreeLib/BPlusTree.o core/BPlusTreeCompFn.o core/catalog.o core/sql_create.o -o dbms.exe -lfl
