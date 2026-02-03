@@ -15,6 +15,9 @@ g++ -g -c SQLParser/SQLParserMain.c -o SQLParserMain.o
 echo "--- Compiling SQLCreateParserCFG.c ---"
 g++ -g -c SQLParser/SQLCreateParserCFG.c -o SQLCreateParserCFG.o
 
+echo "--- Compiling SQLInsertIntoParserCFG.c ---"
+g++ -g -c SQLParser/SQLInsertIntoParserCFG.c -o SQLInsertIntoParserCFG.o
+
 echo "--- Compiling BPlusTreeLib ---"
 g++ -g -c  -fpermissive BPlusTreeLib/BPlusTree.c -o BPlusTreeLib/BPlusTree.o
 
@@ -31,4 +34,4 @@ echo "--- Compiling sql_delete.c ---"
 g++ -g -c core/sql_delete.c -o core/sql_delete.o
 
 echo "--- Creating DBMS Executable ---"
-g++ -g SQLParserMain.o SQLCreateParserCFG.o lex.yy.o BPlusTreeLib/BPlusTree.o core/BPlusTreeCompFn.o core/catalog.o core/sql_create.o core/sql_delete.o -o dbms.exe -lfl
+g++ -g SQLParserMain.o SQLCreateParserCFG.o SQLInsertIntoParserCFG.o lex.yy.o BPlusTreeLib/BPlusTree.o core/BPlusTreeCompFn.o core/catalog.o core/sql_create.o core/sql_delete.o -o dbms.exe -lfl
