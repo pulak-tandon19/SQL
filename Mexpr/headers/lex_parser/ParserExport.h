@@ -36,6 +36,8 @@ extern "C" int yylex();
 extern char lex_buffer[MAX_MEXPR_LEN];
 extern stack_t undo_stack;
 extern char *curr_ptr;
+extern char *lex_curr_token;
+extern int lex_curr_token_len;
 extern int cyylex();
 extern void yyrewind(int n);
 extern void parser_stack_reset();
