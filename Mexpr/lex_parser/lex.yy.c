@@ -505,8 +505,8 @@ stack_t undo_stack = {-1, {0, 0, 0}};
 
 char lex_buffer[MAX_MEXPR_LEN];
 char *curr_ptr = lex_buffer;
-char *lex_curr_token;
-int lex_curr_token_len; 
+char *lex_curr_token; // pointer to the 
+int lex_curr_token_len; //length of the stack's top token
 
 static void 
 lex_push (lex_data_t lex_data) {
@@ -515,6 +515,8 @@ lex_push (lex_data_t lex_data) {
     lex_curr_token = (char *)lex_data.token_val;
     lex_curr_token_len = lex_data.token_len;
 }
+
+
 
 static lex_data_t
 lex_pop () {
@@ -596,7 +598,7 @@ void yyrewind(int n) {
     lex_data_t lex_data;
     while (n) {
         lex_data = lex_pop();
-        data_len = lex_data.token_len;
+        data_len += lex_data.token_len;
         if (lex_data.token_code == PARSER_WHITE_SPACE) {
             continue;
         }
@@ -631,8 +633,8 @@ RESTORE_CHKP(int a) {
 
 #include "Enums/MexprcppEnums.h"
 
-#line 634 "lex_parser/lex.yy.c"
-#line 635 "lex_parser/lex.yy.c"
+#line 636 "lex_parser/lex.yy.c"
+#line 637 "lex_parser/lex.yy.c"
 
 #define INITIAL 0
 
@@ -849,9 +851,9 @@ YY_DECL
 		}
 
 	{
-#line 139 "lex_parser/Parser.l"
+#line 141 "lex_parser/Parser.l"
 
-#line 854 "lex_parser/lex.yy.c"
+#line 856 "lex_parser/lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -910,154 +912,154 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 140 "lex_parser/Parser.l"
+#line 142 "lex_parser/Parser.l"
 {
     return MATH_CPP_BRACKET_START;
 }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 144 "lex_parser/Parser.l"
+#line 146 "lex_parser/Parser.l"
 {
     return MATH_CPP_BRACKET_END;
 }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 148 "lex_parser/Parser.l"
+#line 150 "lex_parser/Parser.l"
 {
     return MATH_CPP_LESS_THAN_EQ;
 }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 152 "lex_parser/Parser.l"
+#line 154 "lex_parser/Parser.l"
 {
     return MATH_CPP_LESS_THAN;
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 156 "lex_parser/Parser.l"
+#line 158 "lex_parser/Parser.l"
 {
     return MATH_CPP_GREATER_THAN_EQ;
 }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 160 "lex_parser/Parser.l"
+#line 162 "lex_parser/Parser.l"
 {
     return MATH_CPP_GREATER_THAN;
 }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 165 "lex_parser/Parser.l"
+#line 167 "lex_parser/Parser.l"
 {
     return MATH_CPP_EQ;
 }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 169 "lex_parser/Parser.l"
+#line 171 "lex_parser/Parser.l"
 {
     return MATH_CPP_NEQ;
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 173 "lex_parser/Parser.l"
+#line 175 "lex_parser/Parser.l"
 {
     return MATH_CPP_AND;
 }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 177 "lex_parser/Parser.l"
+#line 179 "lex_parser/Parser.l"
 {
     return MATH_CPP_OR;
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 181 "lex_parser/Parser.l"
+#line 183 "lex_parser/Parser.l"
 {
     return MATH_CPP_MUL;
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 185 "lex_parser/Parser.l"
+#line 187 "lex_parser/Parser.l"
 {
     return MATH_CPP_PLUS;
 }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 189 "lex_parser/Parser.l"
+#line 191 "lex_parser/Parser.l"
 {
     return  MATH_CPP_MINUS;
 }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 193 "lex_parser/Parser.l"
+#line 195 "lex_parser/Parser.l"
 {
     return MATH_CPP_DIV;
 }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 197 "lex_parser/Parser.l"
+#line 199 "lex_parser/Parser.l"
 {
     return MATH_CPP_COMMA;
 }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 201 "lex_parser/Parser.l"
+#line 203 "lex_parser/Parser.l"
 {
     return MATH_CPP_SQRT;
 }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 205 "lex_parser/Parser.l"
+#line 207 "lex_parser/Parser.l"
 {
     return MATH_CPP_SQR;
 }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 209 "lex_parser/Parser.l"
+#line 211 "lex_parser/Parser.l"
 {
     return MATH_CPP_MAX;
 }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 213 "lex_parser/Parser.l"
+#line 215 "lex_parser/Parser.l"
 {
     return MATH_CPP_MIN;
 }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 217 "lex_parser/Parser.l"
+#line 219 "lex_parser/Parser.l"
 {
     return MATH_CPP_SIN;
 }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 221 "lex_parser/Parser.l"
+#line 223 "lex_parser/Parser.l"
 {
     return MATH_CPP_COS;
 }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 225 "lex_parser/Parser.l"
+#line 227 "lex_parser/Parser.l"
 {
     return MATH_CPP_POW;
 }
@@ -1065,7 +1067,7 @@ YY_RULE_SETUP
 case 23:
 /* rule 23 can match eol */
 YY_RULE_SETUP
-#line 229 "lex_parser/Parser.l"
+#line 231 "lex_parser/Parser.l"
 {
     return PARSER_EOL;
 }
@@ -1073,14 +1075,14 @@ YY_RULE_SETUP
 case 24:
 /* rule 24 can match eol */
 YY_RULE_SETUP
-#line 233 "lex_parser/Parser.l"
+#line 235 "lex_parser/Parser.l"
 {
 
 }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 237 "lex_parser/Parser.l"
+#line 239 "lex_parser/Parser.l"
 {
     /* Ignore */
     process_white_space(1);
@@ -1088,7 +1090,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 242 "lex_parser/Parser.l"
+#line 244 "lex_parser/Parser.l"
 {
     /*ignore tabs*/
     process_white_space(4);
@@ -1096,28 +1098,28 @@ YY_RULE_SETUP
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 247 "lex_parser/Parser.l"
+#line 249 "lex_parser/Parser.l"
 {
     return MATH_CPP_INT;
 }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 251 "lex_parser/Parser.l"
+#line 253 "lex_parser/Parser.l"
 {
     return MATH_CPP_DOUBLE;
 }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 255 "lex_parser/Parser.l"
+#line 257 "lex_parser/Parser.l"
 {
     return MATH_CPP_VARIABLE;
 }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 259 "lex_parser/Parser.l"
+#line 261 "lex_parser/Parser.l"
 {
     return MATH_CPP_VARIABLE;
 }
@@ -1125,7 +1127,7 @@ YY_RULE_SETUP
 case 31:
 /* rule 31 can match eol */
 YY_RULE_SETUP
-#line 263 "lex_parser/Parser.l"
+#line 265 "lex_parser/Parser.l"
 {
     // string enclosed within single quotes
     return MATH_CPP_STRING;
@@ -1134,7 +1136,7 @@ YY_RULE_SETUP
 case 32:
 /* rule 32 can match eol */
 YY_RULE_SETUP
-#line 268 "lex_parser/Parser.l"
+#line 270 "lex_parser/Parser.l"
 {
     // string enclosed within double quotes
     return MATH_CPP_STRING;
@@ -1142,17 +1144,17 @@ YY_RULE_SETUP
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 274 "lex_parser/Parser.l"
+#line 276 "lex_parser/Parser.l"
 {
     printf ("ignore non-parsable character - %s\n", yytext);
 }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 279 "lex_parser/Parser.l"
+#line 281 "lex_parser/Parser.l"
 ECHO;
 	YY_BREAK
-#line 1155 "lex_parser/lex.yy.c"
+#line 1157 "lex_parser/lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2157,7 +2159,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 279 "lex_parser/Parser.l"
+#line 281 "lex_parser/Parser.l"
 
 
 extern parse_rc_t E();
