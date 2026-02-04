@@ -37,4 +37,4 @@ echo "--- Compiling sql_insert_into.c ---"
 g++ -g -c core/sql_insert_into.c -o core/sql_insert_into.o
 
 echo "--- Creating DBMS Executable ---"
-g++ -g SQLParserMain.o SQLCreateParserCFG.o SQLInsertIntoParserCFG.o lex.yy.o BPlusTreeLib/BPlusTree.o core/BPlusTreeCompFn.o core/catalog.o core/sql_create.o core/sql_delete.o core/sql_insert_into.o -o dbms.exe -lfl
+g++ -g SQLParserMain.o SQLCreateParserCFG.o SQLInsertIntoParserCFG.o lex.yy.o BPlusTreeLib/BPlusTree.o core/BPlusTreeCompFn.o core/catalog.o core/sql_create.o core/sql_delete.o core/sql_insert_into.o -o dbms.exe -lfl -L ../Mexpr/-lMexpr 
