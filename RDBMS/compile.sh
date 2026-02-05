@@ -18,6 +18,12 @@ g++ -g -c SQLParser/SQLCreateParserCFG.c -o SQLCreateParserCFG.o
 echo "--- Compiling SQLInsertIntoParserCFG.c ---"
 g++ -g -c SQLParser/SQLInsertIntoParserCFG.c -o SQLInsertIntoParserCFG.o
 
+echo "--- Compiling SQLSelectParserCFG.c ---"
+g++ -g -c SQLParser/SQLSelectParserCFG.c -o SQLSelectParserCFG.o
+
+echo "---Compiling SqlToMexprEnumMapper.c ---"
+g++ -g -c SQLParser/SqlToMexprEnumMapper.c -o SqlToMexprEnumMapper.o
+
 echo "--- Compiling BPlusTreeLib ---"
 g++ -g -c  -fpermissive BPlusTreeLib/BPlusTree.c -o BPlusTreeLib/BPlusTree.o
 
@@ -36,5 +42,8 @@ g++ -g -c core/sql_delete.c -o core/sql_delete.o
 echo "--- Compiling sql_insert_into.c ---"
 g++ -g -c core/sql_insert_into.c -o core/sql_insert_into.o
 
+echo "--- Compiling SqlMexprIntf.c ---"
+g++ -g -c SQLParser/SqlMexprIntf.c -o SqlMexprIntf.o
+
 echo "--- Creating DBMS Executable ---"
-g++ -g SQLParserMain.o SQLCreateParserCFG.o SQLInsertIntoParserCFG.o lex.yy.o BPlusTreeLib/BPlusTree.o core/BPlusTreeCompFn.o core/catalog.o core/sql_create.o core/sql_delete.o core/sql_insert_into.o -o dbms.exe -lfl -L ../Mexpr/-lMexpr 
+g++ -g SQLParserMain.o SQLCreateParserCFG.o SQLInsertIntoParserCFG.o SQLSelectParserCFG.o lex.yy.o BPlusTreeLib/BPlusTree.o core/BPlusTreeCompFn.o core/catalog.o core/sql_create.o core/sql_delete.o core/sql_insert_into.o SQLParser/SqlMexprIntf.o -o dbms.exe -lfl -L ../Mexpr/-lMexpr
