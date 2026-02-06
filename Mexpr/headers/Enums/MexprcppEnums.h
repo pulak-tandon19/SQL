@@ -146,9 +146,7 @@ Math_cpp_is_unary_operator (int opcode) {
     return false;
 }
 
-// static inline int 
-// Appln_to_Mexpr_enum_converter (int token_code) {
-//     return token_code;
-// }
+extern int 
+Appln_to_Mexpr_enum_converter (int token_code);
 
 #endif 

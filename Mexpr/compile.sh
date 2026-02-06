@@ -25,18 +25,18 @@ g++ -g -Iheaders -c Dtypes/Dtype.cpp -o Dtypes/Dtype.o
 echo "--- Compiling MexprTree.cpp ---"
 g++ -g -Iheaders -c MexprTree/MexprTree.cpp -o MexprTree/MexprTree.o
 
-echo "--- Compiling calculator.cpp---"
-g++ -g -Iheaders -c calculator/calculator.cpp -o calculator/calculator.o
+# echo "--- Compiling calculator.cpp---"
+# g++ -g -Iheaders -c calculator/calculator.cpp -o calculator/calculator.o
 
-echo "--- Creating calculator executable ---"
-g++ -g lex_parser/lex.yy.o ExpressionParser/ExpressionParser.o Enums/EnumConverter.o  Operators/Operators.o Dtypes/Dtype.o MexprTree/MexprTree.o calculator/calculator.o -o executables/calculator/calculator -lfl
+# echo "--- Creating calculator executable ---"
+# g++ -g lex_parser/lex.yy.o ExpressionParser/ExpressionParser.o Enums/EnumConverter.o  Operators/Operators.o Dtypes/Dtype.o MexprTree/MexprTree.o calculator/calculator.o -o executables/calculator/calculator -lfl
 
-echo "--- Build Successful! Run with ./executables/calculator/calculator ---"
+# echo "--- Build Successful! Run with ./executables/calculator/calculator ---"
 
-echo "--- Linking executable ---"
-g++ -g lex_parser/lex.yy.o ExpressionParser/ExpressionParser.o Enums/EnumConverter.o -o executables/parser/exe -lfl
+# echo "--- Linking executable ---"
+# g++ -g lex_parser/lex.yy.o ExpressionParser/ExpressionParser.o Enums/EnumConverter.o -o executables/parser/exe -lfl
 
-echo "--- Build Successful! Run with ./executables/parser/exe ---"
+# echo "--- Build Successful! Run with ./executables/parser/exe ---"
 
 echo "--- Creating Static Library libMexpr.a ---"
 ar rcs libMexpr.a ExpressionParser/ExpressionParser.o Operators/Operators.o Dtypes/Dtype.o MexprTree/MexprTree.o Enums/EnumConverter.o
