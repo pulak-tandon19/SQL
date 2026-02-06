@@ -3,7 +3,7 @@
 #include "../../Mexpr/headers/MexprTree/MexprTree.h"
 
 
-parse_rc_t E (); 
+extern parse_rc_t E (); 
 extern lex_data_t **
 mexpr_convert_infix_to_postfix (lex_data_t *infix, int sizein, int *size_out) ;
 
@@ -24,14 +24,17 @@ postfix_array_free(lex_data_t **lex_data_array, int size) {
 
 static MexprTree *
 Parser_Mexpr_build_math_expression_tree () {
-
+    printf("I\n");
     int i;
     MexprTree *tree = NULL;
+
+    printf("II\n");
 
     int stack_chkp = undo_stack.top + 1;
     parse_rc_t err = E();
 
     if (err == PARSE_ERR) {
+        printf("III\n");
         return NULL;
     }
 
@@ -39,22 +42,31 @@ Parser_Mexpr_build_math_expression_tree () {
     lex_data_t **postfix = mexpr_convert_infix_to_postfix (
                                             &undo_stack.data[stack_chkp],  undo_stack.top + 1 - stack_chkp, &size_out);
 
+    printf("IV\n");
     tree = new MexprTree (postfix, size_out);
     postfix_array_free (postfix, size_out);
+    printf("V\n");
     return tree;
 }
 
 sql_exptree_t *
 sql_create_exp_tree_compute () {
 
+                printf("1\n");
+
+
     sql_exptree_t *sql_exptree = ( sql_exptree_t *) calloc (1, sizeof (sql_exptree_t));
     sql_exptree->tree = Parser_Mexpr_build_math_expression_tree ();
     if (!sql_exptree->tree) {
+                    printf("2\n");
+
         free(sql_exptree);
         return NULL;
     }
     
     if (!sql_exptree->tree->validate (sql_exptree->tree->root )) {
+                    printf("3\n");
+
 
         printf ("Error : %s(%d) Expression Tree doesnt pass Validation test\n", 
                 __FUNCTION__, __LINE__);
@@ -63,5 +75,15 @@ sql_create_exp_tree_compute () {
         return NULL;
     }
 
+                printf("4\n");
+
+
     return sql_exptree;
+}
+
+void 
+sql_destroy_exp_tree (sql_exptree_t *tree) {
+
+    tree->tree->destroy(tree->tree->root);
+    free(tree);
 }

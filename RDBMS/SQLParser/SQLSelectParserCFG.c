@@ -80,6 +80,7 @@ TABS() {
 // COL -> < sql_create_exp_tree_compute ()  >  
 static parse_rc_t 
 COL() {
+            printf("i\n");
 
     parse_init();
 
@@ -89,13 +90,22 @@ COL() {
 
     qp_col->sql_tree = sql_create_exp_tree_compute ();
 
+            printf("j\n");
+
+
     if (!qp_col->sql_tree) {
+
+                    printf("k\n");
 
         free(qp_col);
         qep.select.n--;
         qep.select.sel_colmns[qep.select.n] = NULL;
-        RETURN_PARSE_ERROR;   
+        RETURN_PARSE_ERROR;
+           
     }
+
+                printf("i\n");
+
     
     RETURN_PARSE_SUCCESS;
 }
@@ -104,6 +114,7 @@ COL() {
 // COLLIST -> COL | COL , COLLIST
 static  parse_rc_t 
  COLLIST() {
+    printf("d\n");
 
     parse_init();
     int initial_chkp;
@@ -114,6 +125,8 @@ static  parse_rc_t
     do {
 
         err = COL();
+        printf("e\n");
+
 
         if (err == PARSE_ERR) break;
 
@@ -128,9 +141,15 @@ static  parse_rc_t
             break;
         }
 
+        printf("f\n");
+
+
         err = COLLIST();
 
         if (err == PARSE_ERR) break;
+
+            printf("g\n");
+
 
         RETURN_PARSE_SUCCESS;
 
@@ -143,6 +162,9 @@ static  parse_rc_t
     err = COL();
 
     if (err == PARSE_ERR) RETURN_PARSE_ERROR;
+
+            printf("h\n");
+
 
     RETURN_PARSE_SUCCESS;
  }
@@ -158,19 +180,31 @@ select_query_parser() {
 
     token_code = cyylex();
 
+    printf("a\n");
+
     assert (token_code == SQL_SELECT_Q);
+
+    printf("b\n");
+
 
     err = COLLIST();
 
     if (err == PARSE_ERR) RETURN_PARSE_ERROR;
 
+    printf("c\n");
+
     token_code = cyylex();
 
     if (token_code != SQL_FROM) RETURN_PARSE_ERROR;
 
+    printf("d\n");
+
+
     err = TABS();
 
     if (err == PARSE_ERR) RETURN_PARSE_ERROR;
+    printf("e\n");
+
 
     token_code = cyylex();
 

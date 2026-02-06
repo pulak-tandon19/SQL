@@ -42,6 +42,7 @@ int main(int argc, char **argv) {
                 yyrewind(1);
                 err = select_query_parser();
                 if (err == PARSE_SUCCESS) {
+                    printf("Success : select query parsing\n");
                 }
                 else {
                     printf ("Failed : select query parsing\n");
