@@ -45,5 +45,8 @@ g++ -g -c core/sql_insert_into.c -o core/sql_insert_into.o
 echo "--- Compiling SqlMexprIntf.c ---"
 g++ -g -c core/SqlMexprIntf.cpp -o core/SqlMexprIntf.o
 
+echo "--- Compiling qep.c ---"
+g++ -g -c core/qep.c -o core/qep.o
+
 echo "--- Creating DBMS Executable ---"
-g++ -g SQLParserMain.o SQLCreateParserCFG.o SQLInsertIntoParserCFG.o SQLSelectParserCFG.o SQLToMexprEnumMapper.o lex.yy.o BPlusTreeLib/BPlusTree.o core/BPlusTreeCompFn.o core/catalog.o core/sql_create.o core/sql_delete.o core/sql_insert_into.o core/SqlMexprIntf.o -o dbms.exe -lfl -L../Mexpr -lMexpr
+g++ -g SQLParserMain.o SQLCreateParserCFG.o SQLInsertIntoParserCFG.o SQLSelectParserCFG.o SQLToMexprEnumMapper.o lex.yy.o BPlusTreeLib/BPlusTree.o core/BPlusTreeCompFn.o core/catalog.o core/sql_create.o core/sql_delete.o core/sql_insert_into.o core/SqlMexprIntf.o core/qep.o -o dbms.exe -lfl -L../Mexpr -lMexpr
