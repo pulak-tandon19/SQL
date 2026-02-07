@@ -40,6 +40,9 @@ typedef struct qep_struct_
 
 } qep_struct_t;
 
+void
+sql_execute_qep (qep_struct_t *qep) ;
+
 void 
 qep_deinit (qep_struct_t *qep);
 

@@ -46,11 +46,14 @@ void
 sql_execute_qep (qep_struct_t *qep) {
 
     bool rc;
+
     if (!sql_query_init_execution_plan (qep, &TableCatalogDef)) {
 
         printf ("Error : Failed to initialize Query Execution Plan\n");
         return;
     }
+
+    sql_process_select_query (qep);
 }
 
 void 
