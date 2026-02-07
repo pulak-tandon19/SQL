@@ -9,6 +9,7 @@
 #include "../core/sql_delete.h"
 #include "../core/sql_insert_into.h"
 #include "../core/qep.h"
+#include "../core/sql_select.h"
 
 extern parse_rc_t create_query_parser();
 extern parse_rc_t insert_into_query_parser();
@@ -43,6 +44,7 @@ int main(int argc, char **argv) {
                 err = select_query_parser();
                 if (err == PARSE_SUCCESS) {
                     printf("Success : select query parsing\n");
+                    sql_execute_qep (&qep);
                 }
                 else {
                     printf ("Failed : select query parsing\n");
