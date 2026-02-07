@@ -1,0 +1,12 @@
+#ifndef __SQL_SELECT__
+#define __SQL_SELECT__
+
+#include "stdbool.h"
+
+typedef struct qep_struct_ qep_struct_t;
+typedef struct BPlusTree BPlusTree_t ;
+
+bool
+sql_query_initialize_select_column_list (qep_struct_t *qep, BPlusTree_t *tcatalog);
+
+#endif 
