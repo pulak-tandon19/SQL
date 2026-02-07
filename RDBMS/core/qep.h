@@ -7,6 +7,8 @@
 
 typedef struct catalog_table_value ctable_val_t ;
 typedef struct qp_col_  qp_col_t;
+typedef struct joined_row_  joined_row_t;
+
 
 typedef struct qep_struct_
 {
@@ -22,12 +24,14 @@ typedef struct qep_struct_
 
     } join;
 
-    struct
+    struct  
     {
         int n;
         qp_col_t *sel_colmns[SQL_MAX_COLS_IN_SELECT_LIST];
 
     } select;
+
+    joined_row_t *joined_row_tmplate;
 
 } qep_struct_t;
 
