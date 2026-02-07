@@ -31,3 +31,26 @@ sql_query_initialize_join_clause  (qep_struct_t *qep, BPlusTree_t *tcatalog) {
     }
     return true;
 }
+
+
+void 
+table_iterators_init (qep_struct_t *qep,
+                                table_iterators_t **_titer) {
+
+    int i;
+
+    (*_titer) = (table_iterators_t *)calloc (1, 
+                            sizeof(table_iterators_t) +  
+                            sizeof(table_iter_data_t) * qep->join.table_cnt);
+
+    table_iterators_t *titer = *_titer;
+
+    titer->table_cnt = qep->join.table_cnt;
+
+    for (i = 0; i < titer->table_cnt; i++) {
+        titer->table_iter_data[i].bpnode = NULL;
+        titer->table_iter_data[i].index = 0;
+        titer->table_iter_data[i].ctable_val = qep->join.tables[i].ctable_val;
+    }
+
+}
