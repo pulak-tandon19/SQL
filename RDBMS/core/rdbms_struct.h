@@ -3,6 +3,8 @@
 
 typedef struct sql_exptree_ sql_exptree_t;
 class Dtype;
+typedef struct BPluskey BPluskey_t;
+
 
 typedef struct qp_col_ {
 
@@ -10,5 +12,14 @@ typedef struct qp_col_ {
     Dtype *computed_value;
 
 } qp_col_t ;
+
+typedef struct joined_row_ {
+
+    int size; 
+    BPluskey_t **key_array;
+    void **rec_array;
+    int *table_id_array;   
+    
+} joined_row_t;
 
 #endif 
