@@ -47,6 +47,7 @@ int main(int argc, char **argv) {
                 else {
                     printf ("Failed : select query parsing\n");
                 }
+                qep_deinit(&qep);
                 break;
 
             case SQL_INSERT_Q:
