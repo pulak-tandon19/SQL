@@ -82,6 +82,4 @@ qep_deinit (qep_struct_t *qep) {
         free(qep->joined_row_tmplate);
     }
 
-
-
 }
