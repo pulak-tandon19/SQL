@@ -35,4 +35,7 @@ typedef struct qep_struct_
 
 } qep_struct_t;
 
+void 
+qep_deinit (qep_struct_t *qep);
+
 #endif
